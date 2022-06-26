@@ -34,9 +34,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     }
     try {
       const filteredpath = await filterImageFromURL(image_url);
-      return res.status(200).sendFile(filteredpath, ()=>{
-        deleteLocalFiles([filteredpath])
-      });
+      return res.status(200).sendFile(filteredpath, ()=>deleteLocalFiles([filteredpath]));
     } catch (error) {
       console.log(error);
       return res.status(400).send("Bad request made.")
@@ -46,7 +44,11 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  
+
+  // , ()=>{
+  //   deleteLocalFiles([filteredpath])
+  // }
+
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {
