@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { reject } from 'bluebird';
 
 (async () => {
 
@@ -27,16 +28,16 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
-  app.get('/filteredimage', async (req, res) => {
-    const {image_url} = req.query;
+  app.get('/filteredimage', async (req: express.Request, res: express.Response) => {
+    const {image_url}: { image_url: string } = req.query;
     if (!image_url) {
       return res.status(400).json({success: false, msg: "Failed to get image url"})
     }
     try {
-      const filteredpath = await filterImageFromURL(image_url);
+      const filteredpath: string = await filterImageFromURL(image_url);
       return res.status(200).sendFile(filteredpath, ()=>deleteLocalFiles([filteredpath]));
     } catch (error) {
-      console.log(error);
+      reject(error);
       return res.status(422).send("Unprocessable Entity: Make sure that the data sent in the request contains all valid fields and values beforehand.")
     }
 
