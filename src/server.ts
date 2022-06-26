@@ -37,7 +37,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       return res.status(200).sendFile(filteredpath, ()=>deleteLocalFiles([filteredpath]));
     } catch (error) {
       console.log(error);
-      return res.status(400).send("Bad request made.")
+      return res.status(422).send("Unprocessable Entity: Make sure that the data sent in the request contains all valid fields and values beforehand.")
     }
 
   })
