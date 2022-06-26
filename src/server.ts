@@ -28,6 +28,7 @@ import { reject } from 'bluebird';
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
+  // Typescripted the code
   app.get('/filteredimage', async (req: express.Request, res: express.Response) => {
     const {image_url}: { image_url: string } = req.query;
     if (!image_url) {
